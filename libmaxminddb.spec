@@ -12,11 +12,19 @@ Group:		Libraries
 Source0:	https://github.com/maxmind/libmaxminddb/releases/download/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	475386f4cb6d12cbae2eaa05dbaa7851
 URL:		http://maxmind.github.io/libmaxminddb/
+%if %{with tests}
+BuildRequires:	perl(Test::More) >= 0.88
+BuildRequires:	perl-IPC-Run3
+BuildRequires:	perl-Test-Output
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-The libmaxminddb library provides functions for working MaxMind DB
-files.
+The libmaxminddb library provides a C library for reading MaxMind DB
+files, including the GeoIP2 databases from MaxMind. This is a custom
+binary format designed to facilitate fast lookups of IP addresses
+while allowing for great flexibility in the type of data associated
+with an address.
 
 %package devel
 Summary:	Header files for %{name} library
