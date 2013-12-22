@@ -1,6 +1,7 @@
 #
 # Conditional build:
 %bcond_without	static_libs	# don't build static libraries
+%bcond_without	tests		# build without tests
 
 Summary:	Library for working with MaxMind DB files
 Name:		libmaxminddb
@@ -48,6 +49,7 @@ Statyczna biblioteka %{name}.
 %configure \
 	%{!?with_static_libs:--disable-static}
 %{__make}
+%{?with_tests:%{__make} check}
 
 %install
 rm -rf $RPM_BUILD_ROOT
