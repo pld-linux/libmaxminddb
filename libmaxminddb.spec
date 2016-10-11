@@ -1,22 +1,25 @@
 #
 # Conditional build:
-%bcond_without	static_libs	# don't build static libraries
+%bcond_without	static_libs	# static library
 %bcond_without	tests		# build without tests
 
 Summary:	Library for working with MaxMind DB files
+Summary(pl.UTF-8):	BIblioteka do pracy z plikami MaxMind DB
 Name:		libmaxminddb
-Version:	0.5.3
-Release:	2
-License:	LGPL v2.1+
+Version:	1.2.0
+Release:	1
+License:	Apache v2.0
 Group:		Libraries
+#Source0Download: https://github.com/maxmind/libmaxminddb/releases
 Source0:	https://github.com/maxmind/libmaxminddb/releases/download/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	4ee5932468c308b7e7a3780f7550d713
+# Source0-md5:	fae9021779dffe1b87f038d21f8afd56
 URL:		http://maxmind.github.io/libmaxminddb/
 %if %{with tests}
-BuildRequires:	perl(Test::More) >= 0.88
 BuildRequires:	perl-IPC-Run3
 BuildRequires:	perl-Test-Output
+BuildRequires:	perl-Test-Simple >= 0.88
 %endif
+BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -25,6 +28,12 @@ files, including the GeoIP2 databases from MaxMind. This is a custom
 binary format designed to facilitate fast lookups of IP addresses
 while allowing for great flexibility in the type of data associated
 with an address.
+
+%description -l pl.UTF-8
+Biblioteka libmaxminddb jest biblioteką C do odczytu plików MaxMind
+DB, zawierających bazy danych GeoIP2 firmy MaxMind. Jest to własny
+format binarny zaprojektowany z myślą o szybkim wyszukiwaniu adresów
+IP i dużej elastyczności typu danych powiązanych z adresem.
 
 %package devel
 Summary:	Header files for %{name} library
@@ -57,12 +66,17 @@ Statyczna biblioteka %{name}.
 %configure \
 	%{!?with_static_libs:--disable-static}
 %{__make}
+
 %{?with_tests:%{__make} check}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libmaxminddb.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -72,17 +86,18 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc Changes.md NOTICE README.md
 %attr(755,root,root) %{_bindir}/mmdblookup
 %attr(755,root,root) %{_libdir}/libmaxminddb.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmaxminddb.so.0
+%{_mandir}/man1/mmdblookup.1*
 
 %files devel
 %defattr(644,root,root,755)
-%doc doc/libmaxminddb.md
-%attr(755,root,root) %{_libdir}/%{name}.so
+%attr(755,root,root) %{_libdir}/libmaxminddb.so
 %{_includedir}/maxminddb.h
 %{_includedir}/maxminddb_config.h
-%{_libdir}/libmaxminddb.la
+%{_pkgconfigdir}/libmaxminddb.pc
 %{_mandir}/man3/MMDB_*.3
 %{_mandir}/man3/libmaxminddb.3*
 
