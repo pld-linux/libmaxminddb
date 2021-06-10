@@ -6,13 +6,13 @@
 Summary:	Library for working with MaxMind DB files
 Summary(pl.UTF-8):	BIblioteka do pracy z plikami MaxMind DB
 Name:		libmaxminddb
-Version:	1.4.3
+Version:	1.6.0
 Release:	1
 License:	Apache v2.0
 Group:		Libraries
 #Source0Download: https://github.com/maxmind/libmaxminddb/releases
 Source0:	https://github.com/maxmind/libmaxminddb/releases/download/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	97896f01e3d5922237b11718d0dcae85
+# Source0-md5:	34beeef1cd60e0269516d0576868cf28
 URL:		http://maxmind.github.io/libmaxminddb/
 %if %{with tests}
 BuildRequires:	perl-IPC-Run3
@@ -77,9 +77,6 @@ rm -rf $RPM_BUILD_ROOT
 
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libmaxminddb.la
-
-# bogus link
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/man3/defined.3
 
 %clean
 rm -rf $RPM_BUILD_ROOT
