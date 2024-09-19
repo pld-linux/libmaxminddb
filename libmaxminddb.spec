@@ -1,18 +1,18 @@
 #
 # Conditional build:
 %bcond_without	static_libs	# static library
-%bcond_without	tests		# build without tests
+%bcond_without	tests		# unit tests
 
 Summary:	Library for working with MaxMind DB files
 Summary(pl.UTF-8):	BIblioteka do pracy z plikami MaxMind DB
 Name:		libmaxminddb
-Version:	1.10.0
+Version:	1.11.0
 Release:	1
 License:	Apache v2.0
 Group:		Libraries
 #Source0Download: https://github.com/maxmind/libmaxminddb/releases
 Source0:	https://github.com/maxmind/libmaxminddb/releases/download/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	7fb4f35b3f37c350c995fa5fc5238c43
+# Source0-md5:	9f33d84a090dba6564695f1c4eeacbc0
 URL:		http://maxmind.github.io/libmaxminddb/
 %if %{with tests}
 BuildRequires:	perl-IPC-Run3
