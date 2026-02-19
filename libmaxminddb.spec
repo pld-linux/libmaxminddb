@@ -6,17 +6,16 @@
 Summary:	Library for working with MaxMind DB files
 Summary(pl.UTF-8):	BIblioteka do pracy z plikami MaxMind DB
 Name:		libmaxminddb
-Version:	1.11.0
+Version:	1.12.2
 Release:	1
 License:	Apache v2.0
 Group:		Libraries
 #Source0Download: https://github.com/maxmind/libmaxminddb/releases
 Source0:	https://github.com/maxmind/libmaxminddb/releases/download/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	9f33d84a090dba6564695f1c4eeacbc0
+# Source0-md5:	14b6d00033f7147c170aa71d01d3f239
 URL:		http://maxmind.github.io/libmaxminddb/
 %if %{with tests}
 BuildRequires:	perl-IPC-Run3
-BuildRequires:	perl-Test-Output
 BuildRequires:	perl-Test-Simple >= 0.88
 %endif
 BuildRequires:	pkgconfig
@@ -88,13 +87,13 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc Changes.md NOTICE README.md
 %attr(755,root,root) %{_bindir}/mmdblookup
-%attr(755,root,root) %{_libdir}/libmaxminddb.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmaxminddb.so.0
+%{_libdir}/libmaxminddb.so.*.*.*
+%ghost %{_libdir}/libmaxminddb.so.0
 %{_mandir}/man1/mmdblookup.1*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libmaxminddb.so
+%{_libdir}/libmaxminddb.so
 %{_includedir}/maxminddb.h
 %{_includedir}/maxminddb_config.h
 %{_pkgconfigdir}/libmaxminddb.pc
